@@ -1,5 +1,7 @@
 package remonsinnema.blog.fizzbuzz;
 
+import java.util.Optional;
+
 
 public class Term {
 
@@ -11,12 +13,8 @@ public class Term {
     this.text = text;
   }
 
-  public int getValue() {
-    return value;
-  }
-
-  public String getText() {
-    return text;
+  public Optional<String> textFor(int n) {
+    return Optional.of(text).filter(t -> n % value == 0);
   }
 
 }

@@ -11,9 +11,8 @@ public class FizzBuzz {
   public String get(int n) {
     StringBuilder result = new StringBuilder();
     for (Term term : terms) {
-      if (n % term.getValue() == 0) {
-        result.append(term.getText());
-      }
+      term.textFor(n)
+          .ifPresent(t -> result.append(t));
     }
     if (result.length() > 0) {
       return result.toString();
