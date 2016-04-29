@@ -10,7 +10,7 @@ public class FizzBuzz {
 
   public String get(int n) {
     for (Term term : terms) {
-      if (n == term.getValue()) {
+      if (n % term.getValue() == 0) {
         return term.getText();
       }
     }
