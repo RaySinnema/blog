@@ -1,16 +1,18 @@
 package remonsinnema.blog.fizzbuzz;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 
 public class FizzBuzz {
 
+  private final Collection<Term> terms = Arrays.asList(new Term(3, "Fizz"), new Term(5, "Buzz"));
+
   public String get(int n) {
-    Term term = new Term(3, "Fizz");
-    if (n == term.getValue()) {
-      return term.getText();
-    }
-    term = new Term(5, "Buzz");
-    if (n == term.getValue()) {
-      return term.getText();
+    for (Term term : terms) {
+      if (n == term.getValue()) {
+        return term.getText();
+      }
     }
     return Integer.toString(n);
   }
