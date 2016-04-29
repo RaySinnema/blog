@@ -11,7 +11,11 @@ public class FizzBuzzTest {
 
   @Test
   public void test() {
-    assertEquals("1", "1", fizzbuzz.get(1));
+    assertFizzBuzz("1", 1);
+  }
+
+  private void assertFizzBuzz(String expected, int n) {
+    assertEquals(Integer.toString(n), expected, fizzbuzz.get(n));
   }
 
 }
