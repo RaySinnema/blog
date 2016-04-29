@@ -4,11 +4,13 @@ package remonsinnema.blog.fizzbuzz;
 public class FizzBuzz {
 
   public String get(int n) {
-    if (n == 3) {
-      return "Fizz";
+    Term term = new Term(3, "Fizz");
+    if (n == term.getValue()) {
+      return term.getText();
     }
-    if (n == 5) {
-      return "Buzz";
+    term = new Term(5, "Buzz");
+    if (n == term.getValue()) {
+      return term.getText();
     }
     return Integer.toString(n);
   }
