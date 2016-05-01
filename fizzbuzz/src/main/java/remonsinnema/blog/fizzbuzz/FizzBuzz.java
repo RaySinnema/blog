@@ -11,17 +11,12 @@ public class FizzBuzz {
       new MultipleReplacer(3, "Fizz"), new MultipleReplacer(5, "Buzz"));
 
   public String get(int n) {
-    StringBuilder result = new StringBuilder();
-    for (MultipleReplacer replacer : replacers) {
-      Optional<String> replacement = replacer.textFor(n);
-      if (replacement.isPresent()) {
-        result.append(replacement.get());
-      }
-    }
-    if (result.length() > 0) {
-      return result.toString();
-    }
-    return Integer.toString(n);
+    return replacers.stream()
+        .map(replacer -> replacer.textFor(n))
+        .filter(Optional::isPresent)
+        .map(optional -> optional.get())
+        .reduce((a, b) -> a + b)
+        .orElse(Integer.toString(n));
   }
 
 }
