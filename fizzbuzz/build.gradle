@@ -16,3 +16,5 @@ dependencies {
 }
 
 eclipse.classpath.defaultOutputDir = file('classes')
+
+defaultTasks 'clean','build'
