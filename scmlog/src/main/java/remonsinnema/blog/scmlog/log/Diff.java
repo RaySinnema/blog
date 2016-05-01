@@ -26,7 +26,7 @@ public class Diff {
 
   @Override
   public String toString() {
-    return String.format("%c %s\n%s", 235, getFileName(), getChangeHunks()
+    return String.format("%c %s\n%s", 187, getFileName(), getChangeHunks()
         .map(ch -> ch.toString())
         .collect(Collectors.joining("\n")));
   }

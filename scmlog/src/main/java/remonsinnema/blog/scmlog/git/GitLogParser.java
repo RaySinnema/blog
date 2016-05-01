@@ -93,7 +93,7 @@ public class GitLogParser {
   private Line parseLine(String line) {
     for (Line.Type type : Line.Type.values()) {
       if (line.startsWith(type.toString())) {
-        return new Line(type, line.substring(type.toString().length()).trim());
+        return new Line(type, line.substring(type.toString().length()));
       }
     }
     throw new IllegalArgumentException("Invalid change hunk line: " + line);

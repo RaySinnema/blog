@@ -27,8 +27,6 @@ public class IntegrationTest {
   public void shouldFindCommitInLog() {
     Log log = supplier.get();
 
-    log.getCommits().forEachOrdered(System.out::println);
-
     assertTrue("Missing commit", log.getCommits()
         .filter(c -> "Add default Gradle tasks".equals(c.getSubject()))
         .findAny()
@@ -40,7 +38,7 @@ public class IntegrationTest {
     String context1 = "ape";
     String addition = "bear";
     String deletion = "cheetah";
-    String context2 = "dingo";
+    String context2 = "<dingo>";
     ChangeHunk chunk = new ChangeHunk(Arrays.asList(new Line(CONTEXT, context1), new Line(DELETION, deletion),
         new Line(ADDITION, addition), new Line(CONTEXT, context2)));
     StringWriter writer = new StringWriter();
@@ -48,10 +46,10 @@ public class IntegrationTest {
     new ToHtml(chunk).writeTo(writer);
 
     assertEquals("HTML", "<table style='border: hidden; border-collapse: collapse; font-size: 10pt;'>" + NL
-        + row(' ' + context1)
-        + row('-' + deletion, "eaffea")
-        + row('+' + addition, "ffecec")
-        + row(' ' + context2)
+        + row("  " + context1)
+        + row("- " + deletion, "ffecec")
+        + row("+ " + addition, "eaffea")
+        + row("  " + context2.replace("<", "&lt;").replace(">", "&gt;"))
         + "</table>" + NL,
         writer.toString());
   }
@@ -67,11 +65,7 @@ public class IntegrationTest {
       result.append(" background-color: #").append(backgroundColor).append(';');
     }
     result.append("'>");
-    if (content.isEmpty()) {
-      result.append("&nbsp;");
-    } else {
-      result.append(content.replace(" ", "&nbsp;"));
-    }
+    result.append(content.replace(" ", "&nbsp;"));
     result.append("</td></tr>").append(NL);
     return result.toString();
   }

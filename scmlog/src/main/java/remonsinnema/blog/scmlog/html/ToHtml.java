@@ -10,8 +10,9 @@ import remonsinnema.blog.scmlog.log.Line;
 public class ToHtml {
 
   private static final String SPACE = "&nbsp;";
-  private static final String GREEN = "ffecec";
-  private static final String RED = "eaffea";
+  private static final String GREEN = "eaffea";
+  private static final String RED = "ffecec";
+  private static final String YELLOW = "fffacd";
 
   private final ChangeHunk chunk;
 
@@ -30,7 +31,7 @@ public class ToHtml {
     writer.print("<tr style='border: hidden;'><td style='font-family: Lucida Console; padding: 0;");
     writeBackgroundColor(line, writer);
     writer.print("'>");
-    writeText(line.getType().toString(), writer);
+    writeText(line.getType() + " ", writer);
     writeText(line.getText(), writer);
     writer.println("</td></tr>");
   }
@@ -43,6 +44,8 @@ public class ToHtml {
       case DELETION:
         writeBackgroudColor(RED, writer);
         break;
+      case COMMENT:
+        writeBackgroudColor(YELLOW, writer);
       default:
         break;
     }
@@ -55,7 +58,7 @@ public class ToHtml {
   }
 
   private void writeText(String text, PrintWriter writer) {
-    writer.print(text.replace(" ", SPACE));
+    writer.print(text.replace("&", "&amp;").replace(" ", SPACE).replace("<", "&lt;").replace(">", "&gt;"));
   }
 
 }

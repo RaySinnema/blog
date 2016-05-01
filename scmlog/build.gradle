@@ -1,6 +1,7 @@
 plugins {
   id 'java'
   id 'eclipse'
+  id 'application'
 }
 
 task wrapper(type: Wrapper) {
@@ -18,3 +19,11 @@ dependencies {
 defaultTasks 'clean', 'build'
 
 eclipse.classpath.defaultOutputDir = file('classes')
+
+mainClassName = 'remonsinnema.blog.scmlog.html.Log2Blog'
+
+run {
+  if (project.hasProperty('dir')) {
+    args project.property('dir')
+  }
+}
