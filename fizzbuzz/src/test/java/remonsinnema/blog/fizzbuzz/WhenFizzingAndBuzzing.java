@@ -12,6 +12,7 @@ public class WhenFizzingAndBuzzing {
   @Test
   public void shouldReplaceWithFizzAndBuzz() {
     assertFizzBuzz("1", 1);
+    assertFizzBuzz("2", 2);
   }
 
   private void assertFizzBuzz(String expected, int n) {
