@@ -14,10 +14,8 @@ public class MultipleReplacer {
   }
 
   public Optional<String> textFor(int n) {
-    if (n % value == 0) {
-      return Optional.of(text);
-    }
-    return Optional.empty();
+    return Optional.of(text)
+        .filter(ignored -> n % value == 0);
   }
 
 }
