@@ -15,7 +15,7 @@ import remonsinnema.blog.scmlog.log.Log;
 public class GitLogCommand implements Supplier<Log> {
 
   private static final String[] GIT_LOG_COMMAND = { "git", "--no-pager", "log", "--format=oneline", "-U3",
-      "--diff-algorithm=minimal", "--word-diff=procelain", "--no-color", "--no-prefix", "--reverse", "." };
+      "--diff-algorithm=minimal", "--word-diff=none", "--no-color", "--no-prefix", "--reverse", "." };
 
   private final File dir;
 

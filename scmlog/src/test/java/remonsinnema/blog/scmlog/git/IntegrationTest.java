@@ -9,7 +9,6 @@ import java.io.StringWriter;
 import java.util.Arrays;
 import java.util.function.Supplier;
 
-import org.junit.Ignore;
 import org.junit.Test;
 
 import remonsinnema.blog.scmlog.html.ToHtml;
@@ -25,12 +24,13 @@ public class IntegrationTest {
   private final Supplier<Log> supplier = new GitLogCommand(new File("."));
 
   @Test
-  @Ignore("TODO: Make this work")
   public void shouldFindCommitInLog() {
     Log log = supplier.get();
 
+    log.getCommits().forEachOrdered(System.out::println);
+
     assertTrue("Missing commit", log.getCommits()
-        .filter(c -> "Rename project from gitlog to scmlog".equals(c.getSubject()))
+        .filter(c -> "Add default Gradle tasks".equals(c.getSubject()))
         .findAny()
         .isPresent());
   }

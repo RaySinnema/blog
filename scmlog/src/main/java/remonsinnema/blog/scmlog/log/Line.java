@@ -4,7 +4,7 @@ package remonsinnema.blog.scmlog.log;
 public class Line {
 
   public enum Type {
-    CONTEXT(' '), ADDITION('+'), DELETION('-');
+    CONTEXT(' '), ADDITION('+'), DELETION('-'), COMMENT('\\');
 
     private final char symbol;
 

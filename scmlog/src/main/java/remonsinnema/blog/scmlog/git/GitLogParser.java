@@ -83,7 +83,7 @@ public class GitLogParser {
       if (matcher.matches()) {
         String chunk = matcher.group("chunk");
         if (chunk != null) {
-          lines.replace(chunk);
+          lines.replace(' ' + chunk.trim());
         }
         break;
       }

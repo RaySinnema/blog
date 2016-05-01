@@ -32,7 +32,7 @@ public class Traversal<T> implements Iterator<T> {
   }
 
   public void replace(T value) {
-    items.set(index--, value);
+    items.set(--index, value);
   }
 
 }
