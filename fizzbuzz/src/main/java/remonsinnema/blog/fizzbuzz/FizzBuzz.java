@@ -4,11 +4,13 @@ package remonsinnema.blog.fizzbuzz;
 public class FizzBuzz {
 
   public String get(int n) {
-    if (n == 3) {
-      return "Fizz";
+    MultipleReplacer replacer = new MultipleReplacer(3, "Fizz");
+    if (n == replacer.getValue()) {
+      return replacer.getText();
     }
-    if (n == 5) {
-      return "Buzz";
+    replacer = new MultipleReplacer(5, "Buzz");
+    if (n == replacer.getValue()) {
+      return replacer.getText();
     }
     return Integer.toString(n);
   }
