@@ -11,7 +11,11 @@ public class WhenFizzingAndBuzzing {
 
   @Test
   public void shouldReplaceWithFizzAndBuzz() {
-    assertEquals("1", "1", fizzbuzz.get(1));
+    assertFizzBuzz("1", 1);
+  }
+
+  private void assertFizzBuzz(String expected, int n) {
+    assertEquals(Integer.toString(n), expected, fizzbuzz.get(n));
   }
 
 }
