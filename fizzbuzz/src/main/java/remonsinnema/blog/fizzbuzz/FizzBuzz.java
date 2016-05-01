@@ -2,6 +2,7 @@ package remonsinnema.blog.fizzbuzz;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Optional;
 
 
 public class FizzBuzz {
@@ -11,8 +12,9 @@ public class FizzBuzz {
 
   public String get(int n) {
     for (MultipleReplacer replacer : replacers) {
-      if (n == replacer.getValue()) {
-        return replacer.getText();
+      Optional<String> result = replacer.textFor(n);
+      if (result.isPresent()) {
+        return result.get();
       }
     }
     return Integer.toString(n);

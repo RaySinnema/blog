@@ -1,5 +1,7 @@
 package remonsinnema.blog.fizzbuzz;
 
+import java.util.Optional;
+
 
 public class MultipleReplacer {
 
@@ -11,12 +13,11 @@ public class MultipleReplacer {
     this.text = text;
   }
 
-  public int getValue() {
-    return value;
-  }
-
-  public String getText() {
-    return text;
+  public Optional<String> textFor(int n) {
+    if (n == value) {
+      return Optional.of(text);
+    }
+    return Optional.empty();
   }
 
 }
