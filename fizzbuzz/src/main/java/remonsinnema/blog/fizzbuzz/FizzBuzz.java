@@ -1,16 +1,19 @@
 package remonsinnema.blog.fizzbuzz;
 
+import java.util.Arrays;
+import java.util.Collection;
+
 
 public class FizzBuzz {
 
+  private final Collection<MultipleReplacer> replacers = Arrays.asList(
+      new MultipleReplacer(3, "Fizz"), new MultipleReplacer(5, "Buzz"));
+
   public String get(int n) {
-    MultipleReplacer replacer = new MultipleReplacer(3, "Fizz");
-    if (n == replacer.getValue()) {
-      return replacer.getText();
-    }
-    replacer = new MultipleReplacer(5, "Buzz");
-    if (n == replacer.getValue()) {
-      return replacer.getText();
+    for (MultipleReplacer replacer : replacers) {
+      if (n == replacer.getValue()) {
+        return replacer.getText();
+      }
     }
     return Integer.toString(n);
   }
