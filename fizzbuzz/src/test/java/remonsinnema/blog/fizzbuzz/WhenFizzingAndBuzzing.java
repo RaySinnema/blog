@@ -16,6 +16,7 @@ public class WhenFizzingAndBuzzing {
     assertFizzBuzz("Fizz", 3);
     assertFizzBuzz("4", 4);
     assertFizzBuzz("Buzz", 5);
+    assertFizzBuzz("Fizz", 6);
   }
 
   private void assertFizzBuzz(String expected, int n) {
