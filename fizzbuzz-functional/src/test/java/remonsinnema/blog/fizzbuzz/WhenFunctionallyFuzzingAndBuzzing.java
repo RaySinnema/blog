@@ -11,7 +11,11 @@ public class WhenFunctionallyFuzzingAndBuzzing {
 
   @Test
   public void shouldReplaceMultiplesOfThreeWithFizzAndMultiplesOfFiveWithBuzz() {
-    assertEquals("1", "1", fizzBuzzer.apply(1));
+    assertFizzBuzz("1", 1);
+  }
+
+  private void assertFizzBuzz(String expected, int value) {
+    assertEquals(Integer.toString(value), expected, fizzBuzzer.apply(value));
   }
 
 }
