@@ -7,7 +7,7 @@ public class FizzBuzzer implements Function<Integer, String> {
 
   @Override
   public String apply(Integer n) {
-    return null;
+    return "1";
   }
 
 }
