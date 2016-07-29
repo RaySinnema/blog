@@ -1,0 +1,1 @@
+This is the [FizzBuzz](http://c2.com/cgi/wiki?FizzBuzzTest) kata, using Java 8 streams for a functional solution.
