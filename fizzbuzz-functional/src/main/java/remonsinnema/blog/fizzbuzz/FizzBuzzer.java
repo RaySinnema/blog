@@ -2,9 +2,12 @@ package remonsinnema.blog.fizzbuzz;
 
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.Iterator;
+import java.util.Spliterators;
 import java.util.function.Function;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import java.util.stream.StreamSupport;
 
 
 public class FizzBuzzer implements Function<Integer, String> {
@@ -24,11 +27,13 @@ public class FizzBuzzer implements Function<Integer, String> {
   }
 
   private Stream<Function<Integer, String>> numberReplacersFor(Integer n) {
-    return Stream.of(replacers.stream()
+    Iterator<Function<Integer, String>> result = replacers.stream()
         .filter(replacer -> replacer.test(n))
         .map(replacer -> (Function<Integer, String>) replacer)
-        .findFirst()
-        .orElse(defaultReplacer));
+        .iterator();
+    return result.hasNext()
+        ? StreamSupport.stream(Spliterators.spliteratorUnknownSize(result, 0), false)
+        : Stream.of(defaultReplacer);
   }
 
 }
