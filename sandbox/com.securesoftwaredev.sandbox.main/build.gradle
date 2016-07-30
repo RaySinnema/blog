@@ -1,0 +1,6 @@
+task copyFiles(type: Copy) {
+  from fileTree(dir: 'src/dist', includes: ['**/*'])
+  into project.rootProject.distsDir 
+}
+
+assemble.dependsOn 'copyFiles'

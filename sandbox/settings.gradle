@@ -1,0 +1,2 @@
+include 'com.securesoftwaredev.sandbox.main'
+include 'com.securesoftwaredev.sandbox.mobile'

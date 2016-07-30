@@ -1,0 +1,10 @@
+dependencies {
+  compile project(':com.securesoftwaredev.sandbox.main')
+}
+
+jar {
+  from ('META-INF/services') {
+    include '*'
+    into 'META-INF/services'
+  }
+}

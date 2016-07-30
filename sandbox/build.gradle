@@ -1,0 +1,97 @@
+task wrapper(type: Wrapper) {
+  gradleVersion = '2.14.1'
+}
+
+apply plugin: 'java-base'
+
+allprojects {
+  apply plugin: 'eclipse'
+  eclipse.classpath.defaultOutputDir = file('classes')
+}
+
+subprojects { 
+  apply plugin: 'java'
+  sourceCompatibility = 1.8
+  
+  def keyStoreFile = new File(project.rootProject.distsDir, keyStoreName)
+  def keyStorePath = keyStoreFile.canonicalPath.substring(1 + project.rootProject.projectDir.canonicalPath.length()).replaceAll('\\\\', '/')
+  def keyGeneratedFile = new File(buildDir, 'key.generated')
+  
+  task keystore(type: Exec) {
+    executable 'keytool'
+    args '-genkeypair', '-alias', "$project.name", '-keystore', keyStorePath, '-storepass', keyStorePassword, 
+        '-dname', "CN=$project.name, O=com.securesoftwaredev, C=nl", '-keypass', keyStorePassword, '-validity', 365
+    workingDir project.rootProject.projectDir
+    doFirst {
+      keyStoreFile.parentFile.mkdirs()
+    }
+    doLast {
+      ant.touch(file: keyGeneratedFile.path)
+    }
+    outputs.file keyGeneratedFile
+  }
+  
+  task sign(type: Exec, dependsOn: ['keystore', 'jar']) {
+    executable 'jarsigner'
+    args '-keyStore', keyStorePath, '-storepass', keyStorePassword, '-keypass', keyStorePassword, 
+        '-signedjar', jar.archivePath.path.replace('.jar', '-signed.jar'), jar.archivePath, project.name
+    workingDir project.rootProject.projectDir
+  }
+  
+  task dist(type: Copy, dependsOn: 'sign') {
+    from libsDir
+    into project.rootProject.distsDir
+  }
+  
+  assemble.dependsOn 'dist'
+}
+
+
+task createPolicy {
+  def policyFile = new File(distsDir, policyFileName)
+  outputs.file policyFile 
+  doLast {
+    distsDir.mkdirs()
+    policyFile.text = "keystore \"$keyStoreName\";\n\n" + 
+        "grant signedBy \"${childProjects['com.securesoftwaredev.sandbox.main'].name}\" {\n" +
+        "  permission java.security.AllPermission;\n" +
+        "};\n\n" +
+        "grant {\n" +
+        "  permission com.securesoftwaredev.sandbox.filesystem.ProtectedFilePermission;\n" +
+        "};\n\n"
+  }
+}
+
+assemble.dependsOn 'createPolicy'
+
+
+task runFreely(type: JavaExec, dependsOn: allprojects*.assemble) {
+  classpath fileTree(dir: distsDir, includes: subprojects*.jar.archivePath.name)
+  main mainClass  
+  workingDir distsDir
+}
+
+task runInSandbox(type: JavaExec, dependsOn: subprojects*.assemble) {
+  classpath fileTree(dir: distsDir, includes: subprojects*.jar.archivePath.name*.replace('.jar', '-signed.jar'))
+  main mainClass  
+  workingDir distsDir
+  jvmArgs '-Djava.security.manager', "-Djava.security.policy=$policyFileName"
+}
+
+defaultTasks 'runFreely', 'runInSandbox'
+
+def zipName = "${project.name}.zip"
+
+task createDistribution(type: Zip, dependsOn: allprojects*.clean) {
+  destinationDir projectDir
+  archiveName zipName  
+  from '.'
+  include '**/*'
+  exclude '.gradle'
+  exclude zipName
+  outputs.upToDateWhen { false }
+}
+
+clean << {
+  ant.delete(file: zipName)  
+}
