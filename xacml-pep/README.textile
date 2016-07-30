@@ -1,0 +1,5 @@
+h1. Write a PEP
+
+This project contains sample code that shows how to write a "XACML":http://www.oasis-open.org/committees/tc_home.php?wg_abbrev=xacml _Policy Enforcement Point_ (PEP).
+
+The code is explained at the "EMC Developer Network":https://community.emc.com/docs/DOC-8672.
