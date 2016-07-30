@@ -7,8 +7,7 @@ public class FizzBuzzer implements Function<Integer, String> {
 
   private final Function<Integer, String> replaceNumberWithStringRepresentation
       = n -> Integer.toString(n);
-  private final Function<Integer, String> replaceNumberWithFizz
-      = n -> "Fizz";
+  private final Fizzer replaceNumberWithFizz = new Fizzer();
 
   @Override
   public String apply(Integer n) {
@@ -16,7 +15,7 @@ public class FizzBuzzer implements Function<Integer, String> {
   }
 
   private Function<Integer, String> numberReplacerFor(Integer n) {
-    return n == 3
+    return replaceNumberWithFizz.test(n)
         ? replaceNumberWithFizz
         : replaceNumberWithStringRepresentation;
   }
