@@ -7,7 +7,7 @@ import java.util.function.Function;
 
 public class FizzBuzzer implements Function<Integer, String> {
 
-  private final Function<Integer, String> replaceNumberWithStringRepresentation
+  private final Function<Integer, String> defaultReplacer
       = n -> Integer.toString(n);
   private final Collection<ReplaceNumberWithFixedText> replacers = Arrays.asList(
       new ReplaceNumberWithFixedText(3, "Fizz"),
@@ -20,12 +20,11 @@ public class FizzBuzzer implements Function<Integer, String> {
   }
 
   private Function<Integer, String> numberReplacerFor(Integer n) {
-    for (ReplaceNumberWithFixedText replacer : replacers) {
-      if (replacer.test(n)) {
-        return replacer;
-      }
-    }
-    return replaceNumberWithStringRepresentation;
+    return replacers.stream()
+        .filter(replacer -> replacer.test(n))
+        .map(replacer -> (Function<Integer, String>) replacer)
+        .findFirst()
+        .orElse(defaultReplacer);
   }
 
 }
