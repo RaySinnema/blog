@@ -1,5 +1,7 @@
 package remonsinnema.blog.fizzbuzz;
 
+import java.util.Arrays;
+import java.util.Collection;
 import java.util.function.Function;
 
 
@@ -7,7 +9,10 @@ public class FizzBuzzer implements Function<Integer, String> {
 
   private final Function<Integer, String> replaceNumberWithStringRepresentation
       = n -> Integer.toString(n);
-  private final Fizzer replaceNumberWithFizz = new Fizzer();
+  private final Collection<ReplaceNumberWithFixedText> replacers = Arrays.asList(
+      new ReplaceNumberWithFixedText(3, "Fizz"),
+      new ReplaceNumberWithFixedText(5, "Buzz")
+  );
 
   @Override
   public String apply(Integer n) {
@@ -15,9 +20,12 @@ public class FizzBuzzer implements Function<Integer, String> {
   }
 
   private Function<Integer, String> numberReplacerFor(Integer n) {
-    return replaceNumberWithFizz.test(n)
-        ? replaceNumberWithFizz
-        : replaceNumberWithStringRepresentation;
+    for (ReplaceNumberWithFixedText replacer : replacers) {
+      if (replacer.test(n)) {
+        return replacer;
+      }
+    }
+    return replaceNumberWithStringRepresentation;
   }
 
 }
