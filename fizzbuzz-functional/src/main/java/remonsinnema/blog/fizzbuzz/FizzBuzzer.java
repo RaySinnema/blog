@@ -3,6 +3,8 @@ package remonsinnema.blog.fizzbuzz;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.function.Function;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 
 public class FizzBuzzer implements Function<Integer, String> {
@@ -16,15 +18,17 @@ public class FizzBuzzer implements Function<Integer, String> {
 
   @Override
   public String apply(Integer n) {
-    return numberReplacerFor(n).apply(n);
+    return numberReplacersFor(n)
+        .map(function -> function.apply(n))
+        .collect(Collectors.joining());
   }
 
-  private Function<Integer, String> numberReplacerFor(Integer n) {
-    return replacers.stream()
+  private Stream<Function<Integer, String>> numberReplacersFor(Integer n) {
+    return Stream.of(replacers.stream()
         .filter(replacer -> replacer.test(n))
         .map(replacer -> (Function<Integer, String>) replacer)
         .findFirst()
-        .orElse(defaultReplacer);
+        .orElse(defaultReplacer));
   }
 
 }
