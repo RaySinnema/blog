@@ -9,9 +9,9 @@ public class FizzBuzzer implements Function<Integer, String> {
 
   private final Function<Integer, String> defaultReplacer
       = n -> Integer.toString(n);
-  private final Collection<ReplaceNumberWithFixedText> replacers = Arrays.asList(
-      new ReplaceNumberWithFixedText(3, "Fizz"),
-      new ReplaceNumberWithFixedText(5, "Buzz")
+  private final Collection<ReplaceMultipleWithFixedText> replacers = Arrays.asList(
+      new ReplaceMultipleWithFixedText(3, "Fizz"),
+      new ReplaceMultipleWithFixedText(5, "Buzz")
   );
 
   @Override
